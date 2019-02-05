@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/rambo-api/Group14.Rambo.Api/Group14.Rambo.Api.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

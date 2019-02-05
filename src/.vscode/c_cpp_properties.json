@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:/Users/Siegfried/Documents/Arduino/libraries/dht",
+                "C:/Users/Siegfried/Documents/Arduino/libraries/RF24",
+                "C:/Users/Siegfried/Documents/Arduino/libraries/OneWire",
+                "C:/Users/Siegfried/Documents/Arduino/libraries/rambotalk",
+                "C:/Users/Siegfried/Documents/Arduino/libraries/RadioHead",
+                "{$workspaceFolder}rambo-sensor/rambo-sensor/",
+                "{$workspaceFolder}rambotalk",
+                "C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/5.4.0/include",
+                "C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino",
+                "C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard",
+                "C:/Program Files (x86)/Arduino"
+            ],
+            "intelliSenseMode": "clang-x64",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/4.15.26726/bin/Hostx64/x64/cl.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "forcedInclude": [
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
+            ]
+        }
+    ],
+    "version": 4
+}

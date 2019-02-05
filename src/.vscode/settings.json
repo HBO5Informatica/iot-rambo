@@ -1,0 +1,11 @@
+{
+    "arduino.defaultBaudRate": 9600,
+    "files.associations": {
+        "iosfwd": "cpp",
+        "xlocale": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp",
+        "xmemory0": "cpp",
+        "initializer_list": "cpp"
+    }
+}

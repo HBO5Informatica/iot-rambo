@@ -1,0 +1,3 @@
+# ignore output 
+output/arduino/*
+!output/arduino/placeholder.txt

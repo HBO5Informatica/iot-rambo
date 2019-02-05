@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:uno",
+    "port": "COM4",
+    "sketch": "rambo-node\\arduino-examples\\rambo-node-rx\\rambo-node-rx.ino",
+    "output": "output\\arduino"
+}

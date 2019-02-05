@@ -6,7 +6,7 @@ It uses an array of sensors to detect the requirements for this sustainance and 
 
 This project is by no means complete and serves as an example of an independent IoT platform.
 
-![General Overview](https://imgurl)
+![General Overview](https://raw.githubusercontent.com/HBO5Informatica/iot-rambo/master/docs/rambo.png)
 
 # 2 - Communication
 
@@ -43,8 +43,6 @@ The R.A.M.B.O devices must communicate with each other and the cloud. These mess
 
 Communication between the BO-Sensor and BO-Node is done by 443MHz RF, with messages structured according to the RamboTalk protocol.
 
-- (BO-Sensor Device: **FS1000A** - 433MHz RF Transmitter)
-- (BO-Node Device: **XD-RF-5V** - 433MHz RF Receiver)
 - BO- Node/Sensor : **NRF24L01** - 2,4GHz Transceiver
 
 ### 2.2.1 - Sensor Device parameters
@@ -204,7 +202,7 @@ This means the following:
 
 The BO-Node device is the man-in-the-middle between Sensors, Actors in the local infrastructure, and the R.A.M.B.O. Cloud on the internet. It is effectively a gateway, which speaks multiple protocols:
 
-- RamboTalk via 433 MHz RF - to communicate with BO-Actors and BO-Sensors
+- RamboTalk via NRF24 - to communicate with BO-Actors and BO-Sensors
 
         BO-Sensor -> BO-Node    (SensorData)
         BO-Actor -> BO-Node     (Actor Advertisement)
