@@ -106,15 +106,6 @@ def ws_on_open(ws):
     # Handshake completed
     print("### Websocket connected ###")
 
-    # # Call chathub's send message method
-    # # Reference: https://github.com/aspnet/SignalR/blob/dev/specs/HubProtocol.md#invocation-message-encoding
-    # ws.send(encode_json({
-    #     "type": 1,
-    #     "target": "SendMessage",
-    #     "arguments": ["Python websocket", "Hello world!"]
-    # }))
-    # print("### Hello world message sent to ChatHub ###")
-
 def connect_to_apihub():
     #websocket.enableTrace(True)
     ws = websocket.WebSocketApp("wss://" + SERVERHOST + ":" + str(SERVERPORT) + "/mainHub",

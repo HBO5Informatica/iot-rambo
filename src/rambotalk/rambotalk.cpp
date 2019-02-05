@@ -8,37 +8,18 @@
 RF24 radio(9,10);
 
 void setupTx(uint8_t txPin, uint16_t speed){
-    // Initialise the IO and ISR
-    // vw_set_ptt_inverted(true);
-    // vw_set_tx_pin(txPin);
-    // vw_setup(speed); //bps
-
-
     radio.begin();
     radio.setPALevel(RF24_PA_MAX);
-    //radio.setDataRate(RF24_1MBPS);
     radio.setChannel(0x76);
     radio.openWritingPipe(0xf0f0f0f0e1LL);
-    //const uint64_t pipe = 0xe8e8f0f0e1LL;
-    //radio.openReadingPipe(1, pipe);
     radio.enableDynamicPayloads();
     radio.powerUp();
 }
 
 void setupRx(uint8_t rxPin, uint16_t speed){
-    
-    // // Initialise the IO and ISR
-    // vw_set_ptt_inverted(true); // Required
-    // vw_set_rx_pin(rxPin);
-    // vw_setup(speed);	 // Bits per sec
-
-    // // start receiving
-    // vw_rx_start();
-
     radio.begin();
     radio.setPALevel(RF24_PA_MAX);
     radio.setChannel(0x76);
-    //radio.openWritingPipe(0xf0f0f0f0e1LL);
     const uint64_t pipe = 0xe8e8f0f0e1LL;
     radio.openReadingPipe(1, pipe);
     
@@ -59,54 +40,12 @@ void setupRadioRxTx(){
 }
 
 void transmitBuffer(uint8_t* buffer, uint16_t length){
-    // vw_send(buffer, length);
-    // vw_wait_tx(); // Wait until the whole message is gone
-
-    //const char text[] = "Een langere tekst";
-    //radio.write(text,sizeof(text));
     radio.stopListening();
     radio.write(buffer, length, false);
 
 }
 
 uint8_t receiveBuffer(uint8_t * buffer) {
-    // uint8_t buf[VW_MAX_MESSAGE_LEN];
-    // uint8_t buflen = VW_MAX_MESSAGE_LEN;
-
-    // if (vw_get_message(buf, &buflen)) // Non-blocking
-    // {
-    //     for (int i = 0; i < buflen; i++){
-    //         buffer[i] = buf[i];
-    //     }
-    //     return buflen;
-    // }
-    // return -1;
-
-    
-    // uint16_t buflen = 0;
-    // radio.startListening();
-
-    // Serial.println("N/A");
-    // if (radio.available()){
-    //     Serial.print("AVAILABLE: ");
-    //     uint16_t buflen = radio.getPayloadSize();
-    //     Serial.print(buflen);
-    //     uint8_t buf[buflen];
-        
-    //     radio.read(buf, sizeof(buf));
-    // }
-    // radio.stopListening();
-
-
-    // radio.startListening();
-    // //Serial.println("Starting loop, Radio On.");
-    // char receivedMessage[32] = {};
-    // if (radio.available()){
-    //     radio.read(receivedMessage, sizeof(receivedMessage));
-    //     Serial.println(receivedMessage);
-    //     Serial.println("Turning of the radio");
-    //     radio.stopListening();
-    // }
 
     radio.startListening();
     if (radio.available()){
@@ -130,9 +69,6 @@ void discoverHwAddress(uint8_t* address, uint8_t romPin) {
     uint8_t addr[8] = { 0x0 };
     
     while (addressRom.search(addr)) {
-        // for (uint8_t i = 0; i < 8; i++) {
-        //     Serial.print(addr[i], HEX);
-        // }
         //check CRC
         if (OneWire::crc8( addr, 7) == addr[7]) { 
             for (uint8_t i = 0; i < DEVICE_ADDR_LEN; i++) {
