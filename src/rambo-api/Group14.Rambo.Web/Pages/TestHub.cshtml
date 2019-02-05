@@ -1,0 +1,23 @@
+﻿@page
+@model Group14.Rambo.Web.Pages.TestHubModel
+@{
+    ViewData["Title"] = "TestHub";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Test Hub</h2>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <ul id="messagesList"></ul>
+        </div>
+    </div>
+</div>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/hub.js"></script>
+

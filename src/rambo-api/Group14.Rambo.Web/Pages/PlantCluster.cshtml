@@ -1,0 +1,14 @@
+﻿@page
+@model PlantClusterModel
+@{
+    ViewData["Title"] = "PlantFamily";
+}
+
+<h2>PlantCluster Test Base Data</h2>
+<ul>
+    @foreach (var plantCluster in Model.Result)
+    {
+    <li>@plantCluster.Id - @plantCluster.Name - #plants: @plantCluster.NumberOfPlants</li>
+    }
+</ul>
+

@@ -1,0 +1,17 @@
+﻿@page
+@model PlantFamilyModel
+@{
+    ViewData["Title"] = "PlantFamily";
+}
+
+<h2>PlantFamily Test Base Data</h2>
+<ul>
+    @foreach (var plantFamily in Model.Result)
+    {
+    <li>@plantFamily.Id - @plantFamily.Name - @plantFamily.AirHumidity - @plantFamily.AirTemperature - @plantFamily.LightIntensity - @plantFamily.SoilMoisture</li>
+    }
+</ul>
+
+
+
+

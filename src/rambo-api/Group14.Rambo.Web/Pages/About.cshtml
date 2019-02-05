@@ -1,0 +1,12 @@
+﻿@page
+@model AboutModel
+@{
+    ViewData["Title"] = "About";
+}
+<h2>Test Actor Api Call</h2>
+<ul>
+    @foreach (var actor in Model.Result)
+    {
+        <li>@actor.Name - @actor.HardwareAddress - @actor.Id</li>
+    }
+</ul>

@@ -1,0 +1,313 @@
+﻿@page "{id:int}"
+@using Microsoft.VisualStudio.Web.CodeGeneration
+@model SensorsModel
+@{
+    ViewData["Title"] = "Sensors";
+    var maxDate = Model.Result.Max(r => r.RegisteredDateTime);
+}
+
+<h2>My Sensors</h2>
+<h3>@Model.SensorName</h3>
+<div class="row align-items-center">
+    <div class="col-md-2">
+        <div class="light blinkActive"></div>
+        SoilMoisture
+    </div>
+    <div class="col-md-1 relative">
+        <img src="~/images/soil.svg" class="thumb" /><img src="~/images/humidity.svg" class="thumb overlay" />
+        <p><span id="currentSoilMoisture">@Model.Result.FirstOrDefault(r => r.RegisteredDateTime == maxDate)?.SoilMoisture</span></p>
+    </div>
+    <div class="col-md-2"><button type="button" class="btn btn-outline-danger actorButton" data-actor="water">Apply Water</button></div>
+    <div class="col-md-7">
+        <canvas id="soilMoistureChart" width="200" height="200"></canvas>
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-md-2">
+        <div class="light blinkActive"></div>
+        Humidity
+    </div>
+    <div class="col-md-1 relative">
+        <img src="~/images/humidity.svg" class="thumb" />
+        <p><span id="currentHumidity">@Model.Result.FirstOrDefault(r => r.RegisteredDateTime == maxDate)?.Humidity</span></p>
+    </div>
+    <div class="col-md-2"><button type="button" class="btn btn-outline-danger actorButton" data-actor="water">Apply Water</button></div>
+    <div class="col-md-7">
+        <canvas id="humidityChart" width="200" height="200"></canvas>
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-md-2">
+        <div class="light blinkActive"></div>
+        Temperature
+    </div>
+    <div class="col-md-1 relative">
+        <img src="~/images/thermometer.svg" class="thumb" />
+        <p><span id="currentTemperature">@Model.Result.FirstOrDefault(r => r.RegisteredDateTime == maxDate)?.Temperature</span></p>
+    </div>
+    <div class="col-md-2"><button type="button" class="btn btn-outline-danger actorButton" data-actor="heating">Apply Heating</button></div>
+    <div class="col-md-7">
+        <canvas id="temperatureChart" width="200" height="200"></canvas>
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-md-2">
+        <div class="light blinkInactive"></div>
+        LightLevel
+    </div>
+    <div class="col-md-1 relative">
+        <img src="~/images/lights.svg" class="thumb" />
+        <p><span id="currentLightLevel">@Model.Result.FirstOrDefault(r => r.RegisteredDateTime == maxDate)?.LightLevel</span></p>
+    </div>
+    <div class="col-md-2"><button type="button" class="btn btn-outline-danger actorButton" data-actor="light">Apply Light</button></div>
+    <div class="col-md-7">
+        <canvas id="lightLevelChart" width="200" height="200"></canvas>
+    </div>
+</div>
+
+
+<hr />
+<h2>Actions Needed</h2>
+<div class="row top-buffer">
+    <div class="col-md-3 text-center">
+        <img src="~/images/blind.svg" class="thumb disabled" />
+        <p>Open/lower blinds</p>
+    </div>
+    <div class="col-md-3 text-center">
+        <img src="~/images/radiator (1).svg" class="thumb" />
+        <p>Turn On/Off heating</p>
+    </div>
+    <div class="col-md-3 text-center">
+        <img src="~/images/watering-can.svg" class="thumb" />
+        <p>Add water</p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+@section Scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+    <script>
+        var maxDataLength = 10;
+        var ctxSoilMoistureChart = document.getElementById("soilMoistureChart");
+        ctxSoilMoistureChart.height = 50;
+        var soilMoistureXValue = 0;
+        var soilMoistureDataPoints = [];
+        var soilMoistureDataLabels = [];
+
+        var soilMoistureChart = new Chart(ctxSoilMoistureChart,
+            {
+                type: 'line',
+                data: {
+                    labels: soilMoistureDataLabels,
+                    datasets: [
+                        {
+                            label: "Last 0 readings",
+                            data: soilMoistureDataPoints,
+                            fill: false,
+                            borderColor: "rgb(75, 192, 192)",
+                            lineTension: 0.1
+                        }
+                    ]
+                },
+                options: {}
+            });
+
+        var ctxHumidityChart = document.getElementById("humidityChart");
+        ctxHumidityChart.height = 50;
+        var humidityXValue = 0;
+        var humidityDataPoints = [];
+        var humidityDataLabels = [];
+
+        var humidityChart = new Chart(ctxHumidityChart,
+            {
+                type: 'line',
+                data: {
+                    labels: humidityDataLabels,
+                    datasets: [
+                        {
+                            label: "Last 0 readings",
+                            data: humidityDataPoints,
+                            fill: false,
+                            borderColor: "rgb(75, 192, 192)",
+                            lineTension: 0.1
+                        }
+                    ]
+                },
+                options: {}
+            });
+
+        var ctxTemperatureChart = document.getElementById("temperatureChart");
+        ctxTemperatureChart.height = 50;
+        var temperatureXValue = 0;
+        var temperatureDataPoints = [];
+        var temperatureDataLabels = [];
+
+        var temperatureChart = new Chart(ctxTemperatureChart,
+            {
+                type: 'line',
+                data: {
+                    labels: temperatureDataLabels,
+                    datasets: [
+                        {
+                            label: "Last 0 readings",
+                            data: temperatureDataPoints,
+                            fill: false,
+                            borderColor: "rgb(75, 192, 192)",
+                            lineTension: 0.1
+                        }
+                    ]
+                },
+                options: {}
+            });
+
+        
+        var ctxLightLevelChart = document.getElementById("lightLevelChart");
+        ctxLightLevelChart.height = 50;
+        var lightLevelXValue = 0;
+        var lightLevelDataPoints = [];
+        var lightLevelDataLabels = [];
+
+        var lightLevelChart = new Chart(ctxLightLevelChart,
+            {
+                type: 'line',
+                data: {
+                    labels: lightLevelDataLabels,
+                    datasets: [
+                        {
+                            label: "Last 0 readings",
+                            data: lightLevelDataPoints,
+                            fill: false,
+                            borderColor: "rgb(75, 192, 192)",
+                            lineTension: 0.1
+                        }
+                    ]
+                },
+                options: {}
+            });
+        
+        function addDataToHumidityChart(data) {
+            humidityDataPoints.push(data);
+            humidityXValue += 1;
+            humidityDataLabels.push(humidityXValue);
+            if (humidityDataPoints.length > maxDataLength) {
+                humidityDataPoints.shift();
+                humidityDataLabels.shift();
+            }
+            humidityChart.data.datasets.forEach((dataset) => {
+                dataset.label = `Last ${humidityDataPoints.length} readings`;
+            });
+            humidityChart.update();
+        }
+
+        function addDataToSoilMoistureChart(data) {
+            soilMoistureDataPoints.push(data);
+            soilMoistureXValue += 1;
+            soilMoistureDataLabels.push(soilMoistureXValue);
+            if (soilMoistureDataPoints.length > maxDataLength) {
+                soilMoistureDataPoints.shift();
+                soilMoistureDataLabels.shift();
+            }
+            soilMoistureChart.data.datasets.forEach((dataset) => {
+                dataset.label = `Last ${soilMoistureDataPoints.length} readings`;
+            });
+            soilMoistureChart.update();
+        }
+
+        function addDataToTemperatureChart(data) {
+            temperatureDataPoints.push(data);
+            temperatureXValue += 1;
+            temperatureDataLabels.push(temperatureXValue);
+            if (temperatureDataPoints.length > maxDataLength) {
+                temperatureDataPoints.shift();
+                temperatureDataLabels.shift();
+            }
+            temperatureChart.data.datasets.forEach((dataset) => {
+                dataset.label = `Last ${temperatureDataPoints.length} readings`;
+            });
+            temperatureChart.update();
+        }
+        
+        function addDataToLightLevelChart(data) {
+            lightLevelDataPoints.push(data);
+            lightLevelXValue += 1;
+            lightLevelDataLabels.push(lightLevelXValue);
+            if (lightLevelDataPoints.length > maxDataLength) {
+                lightLevelDataPoints.shift();
+                lightLevelDataLabels.shift();
+            }
+            lightLevelChart.data.datasets.forEach((dataset) => {
+                dataset.label = `Last ${lightLevelDataPoints.length} readings`;
+            });
+            lightLevelChart.update();
+        }
+
+    </script>
+    <script>
+        var adjustWater = false;
+        var adjustHeat = false;
+        var adjustLight = false;
+        //var requestURLbase = "https://rambo.fiery-app.be/api/Actors/Manual/";
+        var requestURLbase = "https://rambo-group14.azurewebsites.net/api/Actors/Manual/";
+
+        function buttonPressed(event) {
+            console.log(event.target.dataset.actor);
+            notifyAPI(event.target, event.target.dataset.actor);
+        }
+
+        var buttons = document.querySelectorAll(".actorButton");
+        buttons.forEach(function(element) {
+            console.log(element);
+            element.addEventListener("click", buttonPressed, true);
+        });
+
+        function notifyAPI(button, type) {
+            var commandtype = 0;
+            switch (type) {
+            case "water":
+                adjustWater = !adjustWater;
+                break;
+            case "heating":
+                adjustHeat = !adjustHeat;
+                break;
+            case "light":
+                adjustLight = !adjustLight;
+                break;
+            }
+            if (adjustWater) {
+                commandtype += 1;
+                document.querySelectorAll("[data-actor=water]").forEach(el => el.innerHTML = "Water off");
+            } else {
+                document.querySelectorAll("[data-actor=water]").forEach(el => el.innerHTML = "Apply Water");
+            }
+
+            if (adjustHeat) {
+                commandtype += 2;
+                document.querySelectorAll("[data-actor=heating]").forEach(el => el.innerHTML = "Heating off");
+            } else {
+                document.querySelectorAll("[data-actor=heating]").forEach(el => el.innerHTML = "Apply Heating");
+            }
+            if (adjustLight) {
+                commandtype += 4;
+                document.querySelectorAll("[data-actor=light]").forEach(el => el.innerHTML = "Light off");
+            } else {
+                document.querySelectorAll("[data-actor=light]").forEach(el => el.innerHTML = "Apply Light");
+            }
+
+            var request = new XMLHttpRequest();
+            console.log(requestURLbase + commandtype);
+            request.open("GET", requestURLbase + commandtype);
+            request.responseType = "json";
+            request.send();
+
+            request.onload = function() {
+                button.classList.remove("btn-outline-danger");
+                button.classList.add("btn-outline-warning");
+            }
+        }
+
+
+    </script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/sensorHub.js"></script>
+}

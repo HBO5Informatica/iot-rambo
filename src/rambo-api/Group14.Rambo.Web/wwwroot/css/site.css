@@ -1,0 +1,104 @@
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification 
+for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
+
+body {
+    padding-top: 75px;
+    padding-bottom: 20px;
+    background-color: white;
+    
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#soilPlantRight {
+    background-size: contain;
+    background-image: url(../images/soilWithPlantRight.jpg);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: #efefef;
+}
+
+.fitImage {
+    width: 100%;
+}
+
+h4 {
+    text-decoration: underline;
+    color: orange;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+.thumb {
+    width: 50px;
+    height: 50px;
+}
+
+.plantBorder {
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 10%;
+}
+
+.relative {
+    position: relative;
+    text-align: center;
+    font-size: 1.5em;
+    font-family: 'Fredericka the Great', cursive;
+}
+
+.overlay {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 30px;
+    height: 30px;
+}
+
+.top-buffer {
+    margin-top: 20px;
+}
+
+.light {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: yellowgreen;
+    border-radius: 50%;
+}
+
+.blinkActive {
+    animation: activeLight 1s alternate-reverse infinite;
+}
+
+.blinkInactive {
+    animation: inactiveLight 1s alternate-reverse infinite;
+}
+
+@keyframes activeLight {
+    0% {
+        background: yellowgreen;
+    }
+    100% {
+        background: green;
+    }
+}
+
+@keyframes inactiveLight {
+    0% {
+        background: orange;
+    }
+
+    100% {
+        background: red;
+    }
+}

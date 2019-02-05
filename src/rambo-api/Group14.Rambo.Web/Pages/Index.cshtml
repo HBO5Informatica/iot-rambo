@@ -1,0 +1,51 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div id="soilPlantRight" class="jumbotron jumbotron-fluid">
+    <div class="container ">
+        <h1 class="display-4">The R.A.M.B.O. project</h1>
+        <p class="lead">Retain and Maintain Botanical Objectives</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-12">
+                <h4><span>1</span> Botanical Objective Sensors</h4>
+                <p>Arduino sensors monitor the plant environment. This may include temperature, humidity and light intensity. This information is sent by 433MHz RF transmitters to a R.A.M.B.O Node. Sensors may be placed near individual plants, or clusters of similar species.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4><span>2</span> R.A.M.B.O. Node</h4>
+                <p>A device to route information and commands between the Sensors, Actors and the cloud. It employs Wi-Fi technology to facilitate placement near your internet Access Point.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4><span>3</span> R.A.M.B.O. Cloud</h4>
+                <p>The cloud analyzes data and generates reports and notifications for the end user. It is the decision-maker which triggers actions on the Botanical Objective Actors.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4><span>4</span> Botanical Objective Actors</h4>
+                <p>An extensible group of actors, paired with corresponding sensors execute commands originating triggered by the decision-making process in the cloud or from the user. These actions include adjusting lighting, temperature or humidity when needed.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4><span>5</span> R.A.M.B.O. App</h4>
+                <p>Using the app, the end user may configure the system, trigger commands or view reports and notifications.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <img class="fitImage" src="~/images/overview.png" />
+    </div>
+</div>
+
